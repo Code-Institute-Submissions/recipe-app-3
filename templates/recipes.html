@@ -1,0 +1,58 @@
+{% extends 'base.html' %} {% block content %} 
+
+<h3 class="purple-text text-darken-4 center-align">Browse Recipes</h3>
+
+
+
+{% if recipes|length > 0 %}
+<div class="row">
+  {% for recipe in recipes %}
+ <div class="col m3 l4 s12">
+  <div class="card sticky-action">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator" src="{{ recipe.img }}">
+    </div>
+    <div class="card-content">
+    <span class="header grey lighten-2">{{ recipe.recipe_category }}</span>
+      <span class="card-title activator grey-text text-darken-4">{{ recipe.name }}<i class="fas fa-chevron-up right deep-purple-text"></i></span>
+      <p class="header green-text">{{ recipe.diet_type }}</p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Ingredients<i class="fas fa-times right deep-purple-text"></i></span>
+      <ul class="collection">
+      {% for ingredient in recipe.ingredients %}
+      <li class="collection-item">{{ ingredient }}</li>
+      {% endfor %}
+      </ul>
+      <div class="center-align"><a class="waves-effect waves-light deep-purple accent-1 btn-small btn modal-trigger"
+          href="#directionsModal{{ recipe._id }}">Directions</a></div>
+      <div class="buttons center-align"><a class="waves-effect waves-light yellow-text text-darken-4 btn-flat">Edit</a>
+      <a class="waves-effect waves-light red-text text-accent-4 btn-flat">Delete</a></div>
+    </div>
+  </div>
+  </div>
+
+  <!--Modal with cooking derections-->
+  <div id="directionsModal{{ recipe._id }}" class="modal">
+    <div class="modal-content">
+      <h4 class="header deep-purple-text text-darken-4 center">Cooking Directions</h4>
+      {% for paragraph in recipe.cooking_directions %}
+      <p><i class="fas fa-utensil-spoon deep-purple-text text-darken-4"></i> {{ paragraph }}</p>
+      {% endfor %}
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+ 
+  {% endfor %}
+</div>
+  
+
+
+{% else %}
+
+  <h3 class="red-text text-darken-4 center-align">No Results Found</h3>
+{% endif %}
+
+{% endblock %}

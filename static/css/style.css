@@ -1,0 +1,40 @@
+body {
+    background-color: #e8eaf6;
+}
+
+.header {
+    text-transform: uppercase;
+}
+
+.collection {
+    border-left: none;
+    border-right: none;
+}
+
+.card .card-reveal .card-title {
+    margin-bottom: 15px;
+}
+
+.card .card-reveal {
+    padding: 20px;
+    padding-bottom: 10px;
+}
+
+.large-text,
+.large-text i {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+.modal .modal-content {
+    padding: 24px 40px;
+}
+
+.fa-utensils {
+    padding-left: 15px;
+}
+
+.buttons {
+    margin: 20px 0 0 0;
+}
