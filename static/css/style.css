@@ -38,3 +38,11 @@ body {
 .buttons {
     margin: 20px 0 0 0;
 }
+
+#addInput {
+    margin:0;
+}
+
+#ingredient-heading {
+    margin-top: 5rem;
+}
