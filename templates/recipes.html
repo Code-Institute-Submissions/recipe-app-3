@@ -7,15 +7,18 @@
 {% if recipes|length > 0 %}
 <div class="row">
   {% for recipe in recipes %}
- <div class="col m3 l4 s12">
-  <div class="card sticky-action">
+ <div class="col m4 l4 xl3 s12">
+  <div class="card large sticky-action">
     <div class="card-image waves-effect waves-block waves-light">
       <img class="activator" src="{{ url_for('file', filename=recipe['img'])}}">
     </div>
     <div class="card-content">
-    <span class="header grey lighten-2">{{ recipe.recipe_category }}</span>
-      <span class="card-title activator grey-text text-darken-4">{{ recipe.name }}<i class="fas fa-chevron-up right deep-purple-text"></i></span>
-      <p class="header green-text">{{ recipe.diet_type }}</p>
+    <span class="header grey lighten-2 category-header">{{ recipe.recipe_category }}</span>
+      <span class="card-title activator grey-text text-darken-4">{{ recipe.recipe_name }}<i class="fas fa-chevron-up right deep-purple-text"></i></span>
+      
+      {% for type in recipe.diet_type %}
+      <p class="header diet-type" id="diet-type">{{ type }}</p>
+      {% endfor %}
     </div>
     <div class="card-reveal">
       <span class="card-title grey-text text-darken-4">Ingredients<i class="fas fa-times right deep-purple-text"></i></span>
@@ -27,7 +30,7 @@
       <div class="center-align"><a class="waves-effect waves-light deep-purple accent-1 btn-small btn modal-trigger"
           href="#directionsModal{{ recipe._id }}">Directions</a></div>
       <div class="buttons center-align"><a class="waves-effect waves-light yellow-text text-darken-4 btn-flat">Edit</a>
-      <a class="waves-effect waves-light red-text text-accent-4 btn-flat">Delete</a></div>
+      <a class="waves-effect waves-light red-text text-accent-4 btn-flat modal-trigger"  href="#confirmDeleteModal{{ recipe._id }}">Delete</a></div>
     </div>
   </div>
   </div>
@@ -39,6 +42,22 @@
       {% for paragraph in recipe.cooking_directions %}
       <p><i class="fas fa-utensil-spoon deep-purple-text text-darken-4"></i> {{ paragraph }}</p>
       {% endfor %}
+      <a class="deep-purple-text text-darken-4 source-link" href="{{ recipe.link }}" target="_blank">Source Link</a>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+
+  <!--Confirm Delete Modal-->
+  <div id="confirmDeleteModal{{ recipe._id }}" class="modal">
+    <div class="modal-content">
+      <h4 class="header deep-purple-text text-darken-4 center">Please Confirm</h4>
+      <p class="center-align">Are you sure you want to delete {{ recipe.recipe_name }}?</p>
+      <div class="center-align">
+      <a href="{{ url_for('delete_recipe', recipe_id=recipe._id) }}" class="waves-effect waves-light btn-small orange">Yes, I'm sure</a>
+      <a class="modal-close waves-effect waves-light btn-small red accent-4">Cancel</a>
+      </div>
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>

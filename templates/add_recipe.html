@@ -1,9 +1,9 @@
 {% extends 'base.html' %} {% block content %}
 
-<h3 class="light-blue-text text-darken-4 center-align">Add Task</h3>
-<div class="row card-panel grey lighten-5">
+<h3 class="deep-purple-text text-darken-4 center-align">Add Recipe</h3>
+<div class="row card-panel white lighten-5">
   <form
-    class="col s12"
+    class="col s12 validate-input"
     method="POST"
     action="{{ url_for('add_recipe') }}"
     enctype="multipart/form-data"
@@ -11,7 +11,7 @@
     <!--Recipe Category-->
     <div class="row">
       <div class="input-field col s12">
-        <i class="fas fa-folder-open prefix light-blue-text text-darken-4"></i>
+        <i class="fas fa-folder-open prefix deep-purple-text"></i>
         <select
           id="recipe_category"
           name="recipe_category"
@@ -32,12 +32,12 @@
     <!--Recipe Name-->
     <div class="row">
       <div class="input-field col s12">
-        <i class="fas fa-pencil-alt prefix light-blue-text text-darken-4"></i>
+        <i class="fas fa-pencil-alt prefix deep-purple-text"></i>
         <input
           id="recipe_name"
           name="recipe_name"
           minlength="5"
-          maxlength="50"
+          maxlength="70"
           type="text"
           class="validate"
           required
@@ -49,9 +49,9 @@
     <!--Diet Type-->
     <div class="row">
       <div class="input-field col s12">
-        <i class="fas fa-folder-open prefix light-blue-text text-darken-4"></i>
-        <select id="diet_type" name="diet_type" class="validate" required>
-          <option value="" disabled selected>Choose Diet Type</option>
+        <i class="fas fa-folder-open prefix deep-purple-text"></i>
+        <select multiple id="diet_type" name="diet_type" class="validate" required>
+          <option value="" disabled>Choose Diet Type</option>
           {% for diet_type in diet_types %}
           <option value="{{ diet_type.diet_name|capitalize }}"
             >{{ diet_type.diet_name|capitalize }}</option
@@ -64,66 +64,119 @@
 
     <!--Ingredients Array -->
     <div class="row">
-    <h6 id="ingredient-heading">Please add one ingredient on each line:</h6>
+      <div class="input-field col s12 array-heading">
+        <h6 class="array-header">
+          <i
+            class="fas fa-list-ol prefix deep-purple-text"
+            id="ingredient-icon"
+          ></i>
+          Ingredients
+        </h6>
+        <span class="helper-text" data-error="wrong" data-success="left"
+          >Please add one ingredient on each line:</span
+        >
+      </div>
       <div id="addInput" class="input-field col s12">
         <div class="input-field">
-          <label for="ingredient">Ingedient</label>
-          <input id="ingredient" name="ingredient" type="text" required />
+          <label for="ingredient">Ingedient 1</label>
+          <input id="ingredient"class="validate" name="ingredient" type="text" required />
+        </div>
+        <div class="input-field">
+          <label for="ingredient">Ingedient 2</label>
+          <input id="ingredient" name="ingredient" type="text" />
+        </div>
+        <div class="input-field">
+          <label for="ingredient">Ingedient 3</label>
+          <input id="ingredient" name="ingredient" type="text" />
         </div>
       </div>
       <a type="button" onClick="addInput('addInput');"
-        ><i class="fas fa-plus-circle"></i
+        ><i class="fas fa-plus-circle add-icon"></i
       ></a>
     </div>
 
     <!--Cooking directions Array -->
 
     <div class="row">
-      <div class="input-field col s12">
-        <input
-          id="cooking_directions"
-          name="cooking_directions"
-          type="text"
-          required
-        />
-        <input
-          id="cooking_directions"
-          name="cooking_directions"
-          type="text"
-          required
-        />
-        <label for="cooking_directions">Cooking Directions</label>
+      <div class="input-field col s12 array-heading">
+        <h6 class="array-header">
+          <i
+            class="fas fa-cloud-meatball prefix deep-purple-text"
+            id="cooking-icon"
+          ></i>
+          Cooking Instructions
+        </h6>
+        <span class="helper-text" data-error="wrong" data-success="left"
+          >Please add one paragraph on each line:</span
+        >
       </div>
+      <div id="addCookingInput" class="input-field col s12">
+        <div class="input-field">
+          <label for="cooking_directions">Step 1</label>
+          <input
+          class="validate"
+            id="cooking_directions"
+            name="cooking_directions"
+            type="text"
+            required
+          />
+        </div>
+        <div class="input-field">
+          <label for="cooking_directions">Step 2</label>
+          <input
+            id="cooking_directions"
+            name="cooking_directions"
+            type="text"
+          />
+        </div>
+        <div class="input-field">
+          <label for="cooking_directions">Step 3</label>
+          <input
+            id="cooking_directions"
+            name="cooking_directions"
+            type="text"
+          />
+        </div>
+      </div>
+      <a type="button" onClick="addCookingInput('addCookingInput');"
+        ><i class="fas fa-plus-circle add-icon"></i
+      ></a>
     </div>
 
     <!--Image-->
     <div class="row">
-      <div class="input-field col s12">
-        <div><label for="image">Meal Photo</label></div>
-        <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png" />
+      <div class="input-field col s12" id="image-input-div">
+        <div><label for="image" class="array-header">Picture</label></div>
+            <input
+              type="file"
+              name="image"
+              id="image"
+              accept=".jpg, .jpeg, .png"
+              required
+            />
+          
       </div>
     </div>
 
     <!--Link to the original recipe-->
     <div class="row">
       <div class="input-field col s12">
-        <i class="fas fa-pencil-alt prefix light-blue-text text-darken-4"></i>
+        <i class="fas fa-pencil-alt prefix deep-purple-text"></i>
         <input
           id="link"
           name="link"
           minlength="5"
-          maxlength="50"
           type="url"
           class="validate"
         />
-        <label for="link">Source Link</label>
+        <label for="link">Source Link (Optional)</label>
       </div>
     </div>
 
     <!--submit button-->
     <div class="row">
       <div class="col s12 center-align">
-        <button type="submit" class="btn-large light-blue darken-1 text-shadow">
+        <button type="submit" class="btn-large green darken-3 hvr-grow-shadow">
           Add Recipe<i class="fas fa-plus-square right"></i>
         </button>
       </div>

@@ -32,13 +32,14 @@ def add_recipe():
     if request.method == "POST":
         if 'image' in request.files:
             image = request.files['image']
+            #Rename the image to a random string if the name already exists in the database:
             if mongo.db.recipes.find_one({"img": image.filename}):
                 image.filename = uuid.uuid4().hex[:6].upper()
             mongo.save_file(image.filename, image)
             recipe = {
-                "name": request.form.get("name"),
+                "recipe_name": request.form.get("recipe_name"),
                 "recipe_category": request.form.get("recipe_category"),
-                "diet_type": request.form.get("diet_type"),
+                "diet_type": request.form.getlist("diet_type"),
                 "ingredients": request.form.getlist('ingredient'),
                 "cooking_directions": request.form.getlist('cooking_directions'),
                 "link": request.form.get("link"),
@@ -50,6 +51,13 @@ def add_recipe():
     categories = mongo.db.categories.find().sort("category_name", 1)
     diet_types = mongo.db.diet_types.find().sort("diet_name", 1)
     return render_template('add_recipe.html', categories=categories, diet_types=diet_types)
+
+
+@app.route('/delete_recipe/<recipe_id>')
+def delete_recipe(recipe_id):
+    mongo.db.recipes.remove({"_id": ObjectId(recipe_id)})
+    flash("Recipe Successfully Deleted")
+    return redirect(url_for("get_recipes"))
 
 
 @app.route('/file/<filename>')
