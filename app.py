@@ -51,6 +51,20 @@ def add_recipe():
             mongo.db.recipes.insert_one(recipe)
             flash("Recipe Successfully Added")
             return redirect(url_for('get_recipes'))
+        else:
+        #If submitted without image
+            recipe = {
+                "recipe_name": request.form.get("recipe_name"),
+                "recipe_category": request.form.get("recipe_category"),
+                "diet_type": request.form.getlist("diet_type"),
+                "ingredients": request.form.getlist('ingredient'),
+                "cooking_directions": request.form.getlist('cooking_directions'),
+                "link": request.form.get("link"),
+            }
+            mongo.db.recipes.insert_one(recipe)
+            flash("Recipe Successfully Added")
+            return redirect(url_for('get_recipes'))
+
     categories = mongo.db.categories.find().sort("category_name", 1)
     diet_types = mongo.db.diet_types.find().sort("diet_name", 1)
     return render_template('add_recipe.html', categories=categories, diet_types=diet_types)
@@ -154,6 +168,14 @@ def edit_diet_type(diet_id):
     diet_type = mongo.db.diet_types.find_one({"_id": ObjectId(diet_id)})
     return render_template('edit_diet_type.html', diet_type=diet_type)
 
+
+#Search route
+
+@app.route('/search', methods=["GET", "POST"])
+def search():
+    query = request.form.get("query")
+    recipes = list(mongo.db.recipes.find({"$text": {"$search": query}}))
+    return render_template("recipes.html", recipes=recipes)    
 
 
 if __name__ == "__main__":
