@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3 class="deep-purple-text text-darken-4 center-align">Manage Diet Types</h3>
+
+    <div class="row">
+        <div class="col s12 center-align">
+            <a href="{{ url_for('add_diet_type') }}" class="btn-large deep-purple accent-2 hvr-grow-shadow">
+            Add Diet Type<i class="fas fa-plus-square right"></i>
+            </a>
+        </div>
+    </div>
+  <div class="row">
+  {% for diet_type in diet_types %}
+    <div class="col s12 m3">
+      <div class="card white center-align">
+        <div class="card-content deep-purple-text text-darken-4 ">
+          <span class="card-title" id="diet-type-title">{{ diet_type.diet_name|capitalize }}</span>
+        </div>
+        <div class="card-action">
+          <a href="{{ url_for('edit_diet_type', diet_id=diet_type._id) }}" class="btn yellow darken-1"><i class="fas fa-edit"></i></a>
+          <a href="#confirmDeleteModal{{ diet_type._id }}" class="btn red modal-trigger"><i class="fas fa-trash-alt"></i></a>
+        </div>
+      </div>
+    </div>
+
+      <!--Confirm Delete Modal-->
+  <div id="confirmDeleteModal{{ diet_type._id }}" class="modal">
+    <div class="modal-content">
+      <h4 class="header deep-purple-text text-darken-4 center">Please Confirm</h4>
+      <p class="center-align">Are you sure you want to delete {{ diet_type.diet_name }} diet type?</p>
+      <div class="center-align">
+      <a href="{{ url_for('delete_diet_type', diet_id=diet_type._id) }}" class="waves-effect waves-light btn-small orange">Yes, I'm sure</a>
+      <a href="#!" class="modal-close waves-effect waves-light btn-small red accent-4">Cancel</a>
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+  </div>
+            
+{% endblock %}

@@ -128,6 +128,11 @@ a:active {
     font-weight: bold;
 }
 
+
+#diet-type-title {
+    font-weight: 400;
+}
+
 /***************************************************************************Media Queries*/
 
 @media only screen and (min-width: 993px) {

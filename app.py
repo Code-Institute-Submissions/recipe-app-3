@@ -107,6 +107,55 @@ def delete_recipe(recipe_id):
 def file(filename):
     return mongo.send_file(filename)
 
+
+#Route to get diet_types
+
+@app.route('/get_diet_types')
+def get_diet_types():
+    diet_types = list(mongo.db.diet_types.find().sort("diet_name", 1))
+    return render_template('diet_types.html', diet_types=diet_types)
+
+
+#Route to add diet types
+
+@app.route('/add_diet_type', methods=["GET", "POST"])
+def add_diet_type():
+    if request.method == "POST":
+        diet_type = {
+            "diet_name": request.form.get("diet_name")
+        }
+        mongo.db.diet_types.insert_one(diet_type)
+        flash("New Diet Type Added")
+        return redirect(url_for("get_diet_types"))
+    return render_template('add_diet_type.html')
+
+
+#Route to delete diet type
+
+@app.route('/delete_diet_type/<diet_id>')
+def delete_diet_type(diet_id):
+    mongo.db.diet_types.remove({"_id": ObjectId(diet_id)})
+    flash("Diet Successfully Deleted")
+    return redirect(url_for('get_diet_types'))
+
+
+#Route to edit diet type
+
+@app.route('/edit_diet_type/<diet_id>', methods=["GET", "POST"])
+def edit_diet_type(diet_id):
+    if request.method == "POST":
+        submit = {
+            "diet_name": request.form.get("diet_name")
+        }
+        mongo.db.diet_types.update({"_id": ObjectId(diet_id)}, submit)
+        flash("Diet Successfully Updated")
+        return redirect(url_for("get_diet_types"))
+
+    diet_type = mongo.db.diet_types.find_one({"_id": ObjectId(diet_id)})
+    return render_template('edit_diet_type.html', diet_type=diet_type)
+
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
