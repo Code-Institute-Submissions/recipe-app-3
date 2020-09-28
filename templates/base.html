@@ -23,14 +23,8 @@
 				<ul class="right hide-on-med-and-down">
 					<li><a href="{{ url_for('get_recipes') }}">Home</a></li>
 
-                        <li><a href="#">New Recipe</a></li>
-
+                        <li><a href="{{ url_for('add_recipe') }}">New Recipe</a></li>
                         <li><a href="#">Manage Categories</a></li>
-
-                        <li><a href="#">Log Out</a></li>
-
-                        <li><a href="#}">Log In</a></li>
-                        <li><a href="#">Register</a></li>
 
 				</ul>
 			</div>
@@ -40,14 +34,9 @@
 		<ul class="sidenav" id="mobile-demo">
         <li><h4 class="center-align purple-text text-darken-4">SmartMeals</h4></li>
 			<li><a href="{{ url_for('get_recipes') }}">Home</a></li>
-                        <li><a href="#">New Recipe</a></li>
-
+                        <li><a href="{{ url_for('add_recipe') }}">New Recipe</a></li>
                         <li><a href="#">Manage Categories</a></li>
 
-                        <li><a href="#">Log Out</a></li>
-
-                        <li><a href="#}">Log In</a></li>
-                        <li><a href="#">Register</a></li>
 		</ul>
 	</header>
 

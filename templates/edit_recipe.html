@@ -1,0 +1,171 @@
+{% extends 'base.html' %} {% block content %}
+
+<h3 class="deep-purple-text text-darken-4 center-align">Edit Recipe</h3>
+<div class="row card-panel white lighten-5">
+  <form
+    class="col s12 validate-input"
+    method="POST"
+    action="{{ url_for('edit_recipe', recipe_id=recipe._id) }}"
+    enctype="multipart/form-data"
+  >
+    <!--Recipe Category-->
+    <div class="row">
+      <div class="input-field col s12">
+        <i class="fas fa-folder-open prefix deep-purple-text"></i>
+        <select
+          id="recipe_category"
+          name="recipe_category"
+          class="validate"
+          required
+        >
+        {% for category in categories %} 
+        {% if category.category_name == recipe.recipe_category %}
+        <option value="{{ category.category_name }}" selected>{{ category.category_name }}</option>
+        {% else %}
+        <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+        {% endif %} {% endfor %}
+        </select>
+        <label for="recipe_category">Recipe Category</label>
+      </div>
+    </div>
+
+    <!--Recipe Name-->
+    <div class="row">
+      <div class="input-field col s12">
+        <i class="fas fa-pencil-alt prefix deep-purple-text"></i>
+        <input
+          id="recipe_name"
+          name="recipe_name"
+          minlength="5"
+          maxlength="70"
+          type="text"
+          class="validate"
+          value="{{ recipe.recipe_name }}"
+          required
+        />
+        <label for="recipe_name">Recipe Name</label>
+      </div>
+    </div>
+
+    <!--Diet Type-->
+    <div class="row">
+      <div class="input-field col s12">
+        <i class="fas fa-folder-open prefix deep-purple-text"></i>
+        <select multiple id="diet_type" name="diet_type" class="validate" required>
+          
+
+ 
+<!--dtype is an array of values returned from a specific recipe "diet_type" field, which is an array-->
+<!--then the code below checks whether the values from dtype array match the diet types from diet_types database-->
+        {% for diet_type in diet_types  %}
+        {% for type in dtype if diet_type.diet_name|lower == type|lower %}
+            <option value="{{ diet_type.diet_name|capitalize }}" selected>{{ diet_type.diet_name|capitalize }}</option>
+<!--if they values from dtype array don't match the diet types from diet_types database-->
+<!--then return the remaining diet types as unselected options-->
+        {% else %}
+            <option value="{{ diet_type.diet_name|capitalize }}">{{ diet_type.diet_name|capitalize }}</option>
+        {% endfor %}
+        {% endfor %}
+        </select>
+        <label for="diet_type">Diet Type</label>
+      </div>
+    </div>
+
+    <!--Ingredients Array -->
+    <div class="row">
+      <div class="input-field col s12 array-heading">
+        <h6 class="array-header">
+          <i class="fas fa-list-ol prefix deep-purple-text" id="ingredient-icon"></i>
+          Ingredients
+        </h6>
+        <span class="helper-text" data-error="wrong" data-success="left"
+          >Please add one ingredient on each line:</span
+        >
+      </div>
+      <div id="addInput" class="input-field col s12">
+      {% for ingredient in recipe.ingredients %}
+        <div class="input-field">
+          <input id="ingredient"class="validate" name="ingredient" type="text"  value="{{ ingredient }}" required />
+          <label for="ingredient" class="ingredient">Ingredient {{ loop.index }}</label>
+        </div>
+        {% endfor %}
+      </div>
+      <a type="button" onClick="addInput('addInput');"
+        ><i class="fas fa-plus-circle add-icon"></i
+      ></a>
+    </div>
+
+    <!--Cooking directions Array -->
+
+    <div class="row">
+      <div class="input-field col s12 array-heading">
+        <h6 class="array-header">
+          <i
+            class="fas fa-cloud-meatball prefix deep-purple-text"
+            id="cooking-icon"
+          ></i>
+          Cooking Instructions
+        </h6>
+        <span class="helper-text" data-error="wrong" data-success="left"
+          >Please add one paragraph on each line:</span
+        >
+      </div>
+      <div id="addCookingInput" class="input-field col s12">
+      {% for step in recipe.cooking_directions %}
+        <div class="input-field">
+          <label for="cooking_directions" class="cooking-directions">Step {{ loop.index }}</label>
+          <input
+          class="validate"
+            id="cooking_directions"
+            name="cooking_directions"
+            type="text"
+            value="{{ step }}"
+            required/>
+            
+        </div>
+        {% endfor %}
+      </div>
+      <a type="button" onClick="addCookingInput('addCookingInput');"
+        ><i class="fas fa-plus-circle add-icon"></i
+      ></a>
+    </div>
+
+
+    <!--Link to the original recipe-->
+    <div class="row">
+      <div class="input-field col s12">
+        <i class="fas fa-pencil-alt prefix deep-purple-text"></i>
+        {% if recipe.link is not none %}
+        <input
+          id="link"
+          name="link"
+          minlength="5"
+          type="url"
+          class="validate"
+          value="{{ recipe.link }}"
+        />
+        {% else %}
+        <input
+          id="link"
+          name="link"
+          minlength="5"
+          type="url"
+          class="validate"
+        />
+        {% endif %}
+        <label for="link">Source Link (Optional)</label>
+      </div>
+    </div>
+
+    <!--submit button-->
+    <div class="row">
+      <div class="col s12 center-align">
+        <button type="submit" class="btn-large green darken-3 hvr-grow-shadow">
+          Update Recipe<i class="fas fa-plus-square right"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

@@ -14,8 +14,9 @@ $(document).ready(function(){
 });
 
 
-// Add dynamic ingredient input fields
-let ingredientCounter = 3;
+// Function to add dynamic ingredient input fields
+// set counter to the current amount of related input fields on the screen 
+let ingredientCounter = document.getElementsByClassName('ingredient').length;
 let ingredientLimit = 20;
 function addInput(divId){
      if (ingredientCounter == ingredientLimit)  {
@@ -30,9 +31,10 @@ function addInput(divId){
      }
 }
 
-// Add dynamic cooking instructions input fields
-let cookingCounter = 3;
-let cookingLimit = 20;
+// Function to add dynamic cooking instructions input fields
+// set counter to the current amount of related input fields on the screen
+let cookingCounter = document.getElementsByClassName('cooking-directions').length;
+let cookingLimit = 30;
 function addCookingInput(divId){
      if (cookingCounter == cookingLimit)  {
           alert("You have reached the limit of adding " + cookingCounter + " paragraphs");

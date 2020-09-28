@@ -19,6 +19,8 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
+#Home route
+
 @app.route('/')
 @app.route('/get_recipes')
 def get_recipes():
@@ -26,6 +28,7 @@ def get_recipes():
     return render_template("recipes.html", recipes=recipes)
 
 
+#Route to add a newcrecipe
 
 @app.route('/add_recipe', methods=["GET", "POST"])
 def add_recipe():
@@ -53,12 +56,43 @@ def add_recipe():
     return render_template('add_recipe.html', categories=categories, diet_types=diet_types)
 
 
+#Route to update a recipe
+
+@app.route('/edit_recipe/<recipe_id>', methods=["GET", "POST"])
+def edit_recipe(recipe_id):
+    if request.method == "POST":
+        submit = {
+            "recipe_name": request.form.get("recipe_name"),
+            "recipe_category": request.form.get("recipe_category"),
+            "diet_type": request.form.getlist("diet_type"),
+            "ingredients": request.form.getlist('ingredient'),
+            "cooking_directions": request.form.getlist('cooking_directions'),
+            "link": request.form.get("link"),
+        }
+        #only update the fields that are reference in "submit" dictionary, leaving image untouched
+        mongo.db.recipes.update({"_id": ObjectId(recipe_id)}, {"$set": submit})
+        flash("Recipe Successfully Updated")
+        return redirect(url_for('get_recipes'))
+    
+    #dtype gets the values of the "diet_type" array in a specific recipe and returns a list of these values(array)
+    dtype = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)}, { "diet_type": 1, "_id": 0 }).get("diet_type")
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    diet_types = mongo.db.diet_types.find().sort("diet_name", 1)
+    recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
+    return render_template('edit_recipe.html', recipe=recipe, categories=categories, diet_types=diet_types, dtype=dtype)
+
+
+
+#Route to delete a recipe
+
 @app.route('/delete_recipe/<recipe_id>')
 def delete_recipe(recipe_id):
     mongo.db.recipes.remove({"_id": ObjectId(recipe_id)})
     flash("Recipe Successfully Deleted")
     return redirect(url_for("get_recipes"))
 
+
+#Route to access uploaded image from gridfs
 
 @app.route('/file/<filename>')
 def file(filename):
