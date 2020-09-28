@@ -130,6 +130,21 @@
       ></a>
     </div>
 
+    <!--Image Button-->
+    <div class="row">
+      <div class="input-field col s12" id="image-input-div">
+        <div><label for="image" class="array-header">Picture</label></div>
+            <input
+              type="file"
+              name="image"
+              id="image"
+              accept=".jpg, .jpeg, .png"
+            />
+          
+      </div>
+    </div>
+    
+
 
     <!--Link to the original recipe-->
     <div class="row">
@@ -167,5 +182,30 @@
     </div>
   </form>
 </div>
+
+<!--Modal
+ <div id="updateImageModal{{ recipe._id }}" class="modal">
+    <div class="modal-content">
+      <h4 class="header deep-purple-text text-darken-4 center">Update Image</h4>
+      <p class="center-align">Please choose new image</p>
+      <div class="row">
+      <div class="input-field col s12" id="image-input-div">
+        <div><label for="image" class="array-header">Picture</label></div>
+            <input
+              type="file"
+              name="image"
+              id="image"
+              accept=".jpg, .jpeg, .png"
+              required
+            />
+          
+      </div>
+    </div>
+      <div class="center-align">
+      <a href="" class="waves-effect waves-light btn-small orange">Save</a>
+      <a class="modal-close waves-effect waves-light btn-small red accent-4">Cancel</a>
+      </div>
+    </div>
+  </div> -->
 
 {% endblock %}

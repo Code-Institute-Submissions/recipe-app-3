@@ -61,6 +61,15 @@ def add_recipe():
 @app.route('/edit_recipe/<recipe_id>', methods=["GET", "POST"])
 def edit_recipe(recipe_id):
     if request.method == "POST":
+        #only update image if the user chose a new image, otherwise don't update
+        if 'image' in request.files:
+            image = request.files['image']
+            #Rename the image to a random string if the name already exists in the database:
+            if mongo.db.recipes.find_one({"img": image.filename}):
+                image.filename = uuid.uuid4().hex[:6].upper()
+            mongo.save_file(image.filename, image)
+            mongo.db.recipes.update({"_id": ObjectId(recipe_id)}, {"$set": {"img": image.filename}})
+        #update the rest of the fields
         submit = {
             "recipe_name": request.form.get("recipe_name"),
             "recipe_category": request.form.get("recipe_category"),
@@ -69,7 +78,7 @@ def edit_recipe(recipe_id):
             "cooking_directions": request.form.getlist('cooking_directions'),
             "link": request.form.get("link"),
         }
-        #only update the fields that are reference in "submit" dictionary, leaving image untouched
+            #only update the fields that are reference in "submit" dictionary, leaving image untouched
         mongo.db.recipes.update({"_id": ObjectId(recipe_id)}, {"$set": submit})
         flash("Recipe Successfully Updated")
         return redirect(url_for('get_recipes'))

@@ -42,7 +42,7 @@
       {% for paragraph in recipe.cooking_directions %}
       <p><i class="fas fa-utensil-spoon deep-purple-text text-darken-4"></i> {{ paragraph }}</p>
       {% endfor %}
-      {% if recipe.link != "" %}
+      {% if recipe.link is not none %}
       <div class="source-link-div">
       <a class="deep-purple-text text-darken-4 source-link" href="{{ recipe.link }}" target="_blank">Source Link</a>
       </div>
