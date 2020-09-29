@@ -178,6 +178,32 @@ def search():
     return render_template("recipes.html", recipes=recipes)    
 
 
+#Sorting routes
+
+@app.route('/soups')
+def soups():
+    recipes = list((mongo.db.recipes.find({"recipe_category": "Soups"})))
+    return render_template("recipes.html", recipes=recipes)
+
+
+@app.route('/salads')
+def salads():
+    recipes = list((mongo.db.recipes.find({"recipe_category": "Salads"})))
+    return render_template("recipes.html", recipes=recipes)
+
+
+@app.route('/main_course')
+def main_course():
+    recipes = list((mongo.db.recipes.find({"recipe_category": "Main"})))
+    return render_template("recipes.html", recipes=recipes)
+
+
+@app.route('/desserts')
+def desserts():
+    recipes = list((mongo.db.recipes.find({"recipe_category": "Desserts"})))
+    return render_template("recipes.html", recipes=recipes)
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),

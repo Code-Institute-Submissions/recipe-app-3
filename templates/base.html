@@ -14,6 +14,16 @@
   </head>
   <body>
 	<header>
+    <!--Materialize dropdown-->
+		<ul id="course-dropdown" class="dropdown-content deep-purple accent-1">
+			<li><a href="{{ url_for('soups') }}" class="white-text">Soups</a></li>
+            <li class="divider"></li>
+			<li><a href="{{ url_for('salads') }}" class="white-text">Salads</a></li>
+            <li class="divider"></li>
+			<li><a href="{{ url_for('main_course') }}" class="white-text">Main</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ url_for('desserts') }}" class="white-text">Desserts</a></li>
+		</ul>
         <!--top navbar-->
 		<nav class="nav-extended deep-purple accent-1">
 			<div class="nav-wrapper">
@@ -24,18 +34,30 @@
 					<li><a href="{{ url_for('get_recipes') }}">Browse</a></li>
 
                         <li><a href="{{ url_for('add_recipe') }}">New Recipe</a></li>
+                        <li><a class="dropdown-trigger" href="#!" data-target="course-dropdown">Course <i class="fas fa-caret-down"></i></a></li>
                         <li><a href="{{ url_for('get_diet_types') }}">Manage Diet Types</a></li>
 
 				</ul>
 			</div>
 		</nav>
-    
+
+        <!--Materialize dropdown for mobile view-->
+		<ul id="course-dropdown-mobile" class="dropdown-content">
+			<li><a href="{{ url_for('soups') }}">Soups</a></li>
+            <li class="divider"></li>
+			<li><a href="{{ url_for('salads') }}">Salads</a></li>
+            <li class="divider"></li>
+			<li><a href="{{ url_for('main_course') }}">Main</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ url_for('desserts') }}">Desserts</a></li>
+		</ul>
         <!--mobile sidenav-->
 		<ul class="sidenav" id="mobile-demo">
         <li><h4 class="center-align purple-text text-darken-4">SmartMeals</h4></li>
 			<li><a href="{{ url_for('get_recipes') }}">Browse</a></li>
                         <li><a href="{{ url_for('add_recipe') }}">New Recipe</a></li>
                         <li><a href="{{ url_for('get_diet_types') }}">Manage Diet Types</a></li>
+                        <li><a class="dropdown-trigger" href="#!" data-target="course-dropdown-mobile">Course <i class="fas fa-caret-down"></i></a></li>
 
 		</ul>
 	</header>

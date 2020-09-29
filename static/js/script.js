@@ -4,6 +4,9 @@ $(document).ready(function(){
     $('select').formSelect();
     dietTypeColor();
     validateMaterializeSelect();
+    $(".dropdown-trigger").dropdown({
+        coverTrigger: false
+    });
     $('.validate-input').submit(function() {
         //prevent empty inputs from being submitted into arrays
         $(this).find(':input').filter(function() { 

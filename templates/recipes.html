@@ -11,7 +11,7 @@
                 <input type="text" name="query" id="query" minlength="3" class="validate" required>
                 <label for="query">Search Recipes</label>
             </div>
-            <div class="col s5 m3 l6 ">
+            <div class="col s5 m3 l6">
                 <button type="submit" class="deep-purple accent-2 btn">
                     <i class="fas fa-search"></i>
                 </button>
@@ -23,6 +23,8 @@
 
 <!--Recipes-->
 {% if recipes|length > 0 %}
+
+
 <div class="row">
   {% for recipe in recipes %}
  <div class="col m4 l4 xl3 s12">
@@ -89,7 +91,8 @@
  
   {% endfor %}
 </div>
-  
+
+ 
 
 
 {% else %}
