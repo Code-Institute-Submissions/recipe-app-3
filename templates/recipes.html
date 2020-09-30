@@ -35,9 +35,9 @@
   <div class="card large sticky-action">
     <div class="card-image waves-effect waves-block waves-light">
     {% if recipe.img %}
-      <img class="activator" src="{{ url_for('file', filename=recipe['img'])}}">
+      <img class="activator" alt="meal photo" src="{{ url_for('file', filename=recipe['img'])}}">
       {% else %}
-      <img class="activator" src="{{ url_for('static', filename='img/no-image.jpg')}}">
+      <img class="activator" alt="meal photo" src="{{ url_for('static', filename='img/no-image.jpg')}}">
     {% endif %}
     </div>
     <div class="card-content">
