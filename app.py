@@ -183,25 +183,29 @@ def search():
 @app.route('/soups')
 def soups():
     recipes = list((mongo.db.recipes.find({"recipe_category": "Soups"})))
-    return render_template("recipes.html", recipes=recipes)
+    title = "Soups"
+    return render_template("recipes.html", recipes=recipes, title=title)
 
 
 @app.route('/salads')
 def salads():
     recipes = list((mongo.db.recipes.find({"recipe_category": "Salads"})))
-    return render_template("recipes.html", recipes=recipes)
+    title = "Salads"
+    return render_template("recipes.html", recipes=recipes, title=title)
 
 
 @app.route('/main_course')
 def main_course():
     recipes = list((mongo.db.recipes.find({"recipe_category": "Main"})))
-    return render_template("recipes.html", recipes=recipes)
+    title = "Main Course"
+    return render_template("recipes.html", recipes=recipes, title=title)
 
 
 @app.route('/desserts')
 def desserts():
     recipes = list((mongo.db.recipes.find({"recipe_category": "Desserts"})))
-    return render_template("recipes.html", recipes=recipes)
+    title = "Desserts"
+    return render_template("recipes.html", recipes=recipes, title=title)
 
 
 if __name__ == "__main__":
